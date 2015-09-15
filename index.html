@@ -97,17 +97,11 @@
 
     function save(){
         $("button").click(function(){
-            var newpixeldata = new Firebase("https://glowing-fire-1324.firebaseio.com/testint")
+            var newpixeldata = new Firebase("https://glowing-fire-1324.firebaseio.com/")
+            var inLax = newpixeldata.child("new");
+            inLax.child(x0 + ":" + y0).set(currentColor === "fff" ? null : currentColor);
 
-            var drawPixel = function(snapshot) {
-                var coords = snapshot.key().split(":");
-                myContext.fillStyle = "#" + snapshot.val();
-                myContext.fillRect(parseInt(coords[0]) * pixSize, parseInt(coords[1]) * pixSize, pixSize, pixSize);
-            };
-
-            newpixeldata.on('child_added', drawPixel);
-            newpixeldata.on('child_added', drawPixel);
-            newpixeldata.on('child_added', drawPixel);
+         
         })
     }
 </script>
