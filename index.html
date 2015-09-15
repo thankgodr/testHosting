@@ -2,12 +2,13 @@
 <head>
     <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://www.firebase.com/resources/tutorial/css/example.css">
+    <link rel="stylesheet" type="text/css" href="/resources/tutorial/css/example.css">
 </head>
 <body>
 <div class="l-demo-container">
     <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>
+ <button>Save</button>
 <div id="colorholder"></div>
 <script>
     $(document).ready(function () {
@@ -93,6 +94,22 @@
         pixelDataRef.on('child_changed', drawPixel);
         pixelDataRef.on('child_removed', clearPixel);
     });
+
+    function save(){
+        $("button").click(function(){
+            var newpixeldata = new Firebase("https://glowing-fire-1324.firebaseio.com/testint")
+
+            var drawPixel = function(snapshot) {
+                var coords = snapshot.key().split(":");
+                myContext.fillStyle = "#" + snapshot.val();
+                myContext.fillRect(parseInt(coords[0]) * pixSize, parseInt(coords[1]) * pixSize, pixSize, pixSize);
+            };
+
+            newpixeldata.on('child_added', drawPixel);
+            newpixeldata.on('child_added', drawPixel);
+            newpixeldata.on('child_added', drawPixel);
+        })
+    }
 </script>
 </body>
 </html>
